@@ -1,32 +1,88 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+  <v-app>
+    <v-card>
+    <div v-for="(data, i) in dataUser" :key="i">         
+    <v-row>
+      <v-col>
+        <p>{{data.phone}}</p>
+      </v-col>
+      <v-col>
+        <p>{{data.city}}</p>
+      </v-col>
+       <v-col>
+        <p>{{data.name}}</p>
+      </v-col>
+       <v-col>
+        <p>{{data.website}}</p>
+      </v-col>
+       <v-col>
+        <p>{{data.email}}</p>
+      </v-col>
+       <v-col>
+        <p>{{data.username}}</p>
+      </v-col>
+      <v-col>
+        <p>{{data.address.city}}</p>
+      </v-col>
+        <v-col>
+        <p>{{data.company.name}}</p>
+      </v-col>
+    </v-row>
     </div>
-    <router-view/>
-  </div>
+    </v-card>
+    <v-card class="mt-5">
+      <div  v-for="(data, i) in dataFoto" :key="i">
+        <v-row>
+          <v-card>
+             <v-img
+              :src="data.url"
+              class="white--text align-end"
+              
+              height="200px"
+            >
+              <v-card-title v-text="data.title"></v-card-title>
+            </v-img>
+          </v-card>
+        </v-row>
+      </div>
+    </v-card>
+    <v-main>
+      <router-view/>
+    </v-main>
+  </v-app>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import axios from 'axios';
+export default {
+  name: 'App',
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+  data: () => ({
+    dataUser:[],
+    dataFoto:[]
+  }),
+   mounted(){
+     console.log("mount");
+     this.getUser()
+     this.getfoto()
+   },
+   methods:{
+     getUser(){
+     axios.get('https://jsonplaceholder.typicode.com/users')
+     .then((res)=> {console.log(res)
+     this.dataUser = res.data
+     console.log(this.dataUser);
+     })
+     .catch((err)=> console.log(err))
+     },
+     getfoto(){
+       axios.get('https://jsonplaceholder.typicode.com/albums/1/photos')
+       .then((res) => {console.log(res)
+       this.dataFoto = res.data
+       console.log(this.dataFoto);
+       })
+       .catch((err)=> console.log(err))
+     }
+   }
+};
+</script>

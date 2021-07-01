@@ -1,0 +1,1 @@
+flownya dengan mengambil data dari API menggunakan axios lalu hasil egt dari data tersebut sayaa masukkan ke dalam suatu variable tersendiri dan ketika saya akan memanggil saya menggunakan for pada page yang akan saya tampilkan dan menginisialisasi data apa yang perlu saya keluarkan pada page tersebut 
